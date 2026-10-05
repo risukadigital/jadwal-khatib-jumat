@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Admin - Jadwal Khatib Jumat 2027</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f1f5f9;
+            color: #222;
+        }
+
+        header {
+            background: #1e293b;
+            color: white;
+            text-align: center;
+            padding: 30px 20px;
+        }
+
+        header h1 {
+            margin: 0 0 10px;
+            font-size: 28px;
+        }
+
+        header p {
+            margin: 6px 0;
+        }
+
+        main {
+            width: 92%;
+            max-width: 1000px;
+            margin: 30px auto;
+        }
+
+        section {
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            margin-top: 0;
+            margin-bottom: 18px;
+        }
+
+        /* ==========================
+           LOGIN
+        ========================== */
+
+        .box {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            margin-bottom: 6px;
+            font-weight: bold;
+        }
+
+        input,
+        textarea {
+            width: 100%;
+            padding: 11px;
+            border: 1px solid #ccc;
+            border-radius: 7px;
+            font-size: 15px;
+        }
+
+        textarea {
+            min-height: 90px;
+            resize: vertical;
+        }
+
+        button {
+            border: none;
+            border-radius: 7px;
+            padding: 11px 20px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        #btnLogin {
+            margin-top: 20px;
+            background: #2563eb;
+            color: white;
+            width: 100%;
+        }
+
+        #btnLogout {
+            background: #dc2626;
+            color: white;
+        }
+
+        #loginStatus {
+            margin-top: 15px;
+            color: #64748b;
+        }
+
+        /* ==========================
+           HIDDEN
+        ========================== */
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* ==========================
+           ADMIN HEADER
+        ========================== */
+
+        .admin-top {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+            margin-bottom: 30px;
+        }
+
+        .admin-top-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .admin-email {
+            color: #64748b;
+            word-break: break-word;
+        }
+
+        /* ==========================
+           12 BULAN
+        ========================== */
+
+        #bulanContainer {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+        }
+
+        .bulan-card {
+            background: white;
+            padding: 25px 15px;
+            border-radius: 12px;
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+            transition: 0.2s;
+        }
+
+        .bulan-card:hover {
+            background: #2563eb;
+            color: white;
+        }
+
+        /* ==========================
+           FORM
+        ========================== */
+
+        .form-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        #btnSave {
+            background: #16a34a;
+            color: white;
+        }
+
+        #btnDelete {
+            background: #dc2626;
+            color: white;
+        }
+
+        #dataStatus {
+            margin-top: 15px;
+            color: #64748b;
+            font-weight: bold;
+        }
+
+        /* ==========================
+           DAFTAR DATA
+        ========================== */
+
+        .jadwal-item {
+            background: white;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 12px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+        }
+
+        .jadwal-item div {
+            margin-top: 7px;
+        }
+
+        .jadwal-item button {
+            margin-top: 15px;
+            background: #2563eb;
+            color: white;
+        }
+
+        /* ==========================
+           FOOTER
+        ========================== */
+
+        footer {
+            text-align: center;
+            padding: 30px 20px;
+            color: #64748b;
+            font-size: 14px;
+        }
+
+        @media (max-width: 700px) {
+
+            #bulanContainer {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .admin-top-content {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            #btnLogout {
+                width: 100%;
+            }
+
+        }
+
+        @media (max-width: 400px) {
+
+            #bulanContainer {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+    <h1>
+        Admin Khatib Jumat 2027
+    </h1>
+
+    <p>
+        Kelola Jadwal Khatib
+    </p>
+
+</header>
+
+
+<main>
+
+
+    <!-- ==========================
+         LOGIN
+    =========================== -->
+
+    <section
+        id="loginBox"
+        class="box"
+    >
+
+        <h2>
+            Login Admin
+        </h2>
+
+
+        <label for="email">
+            Email
+        </label>
+
+        <input
+            type="email"
+            id="email"
+            placeholder="Email admin"
+        >
+
+
+        <label for="password">
+            Password
+        </label>
+
+        <input
+            type="password"
+            id="password"
+            placeholder="Password"
+        >
+
+
+        <button id="btnLogin">
+            Login
+        </button>
+
+
+        <div id="loginStatus"></div>
+
+    </section>
+
+
+    <!-- ==========================
+         ADMIN PANEL
+    =========================== -->
+
+    <section
+        id="adminPanel"
+        class="hidden"
+    >
+
+
+        <!-- ADMIN INFO -->
+
+        <div class="admin-top">
+
+            <div class="admin-top-content">
+
+                <div>
+
+                    <strong>
+                        Admin Login
+                    </strong>
+
+                    <div
+                        id="adminEmail"
+                        class="admin-email"
+                    >
+                    </div>
+
+                </div>
+
+
+                <button id="btnLogout">
+                    Logout
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- ==========================
+             PILIH BULAN
+        =========================== -->
+
+        <section>
+
+            <h2>
+                Pilih Bulan
+            </h2>
+
+            <div id="bulanContainer"></div>
+
+        </section>
+
+
+        <!-- ==========================
+             FORM JADWAL
+        =========================== -->
+
+        <section class="box">
+
+            <h2>
+                Data Jadwal
+            </h2>
+
+
+            <label for="jadwalId">
+                ID Jadwal
+            </label>
+
+            <input
+                type="text"
+                id="jadwalId"
+                placeholder="Contoh: jadwal-2027-01-01"
+            >
+
+
+            <label for="tanggal">
+                Tanggal
+            </label>
+
+            <input
+                type="text"
+                id="tanggal"
+                placeholder="Contoh: 01-01-2027"
+            >
+
+
+            <label for="bulan">
+                Bulan
+            </label>
+
+            <input
+                type="text"
+                id="bulan"
+                placeholder="Nama bulan"
+                readonly
+            >
+
+
+            <label for="namaKhatib">
+                Nama Khatib
+            </label>
+
+            <input
+                type="text"
+                id="namaKhatib"
+                placeholder="Nama khatib"
+            >
+
+
+            <label for="tempat">
+                Tempat / Masjid
+            </label>
+
+            <input
+                type="text"
+                id="tempat"
+                placeholder="Nama masjid"
+            >
+
+
+            <label for="alamat">
+                Alamat
+            </label>
+
+            <input
+                type="text"
+                id="alamat"
+                placeholder="Alamat / lokasi"
+            >
+
+
+            <label for="pengurus">
+                Nama Pengurus
+            </label>
+
+            <input
+                type="text"
+                id="pengurus"
+                placeholder="Nama pengurus"
+            >
+
+
+            <label for="hpPengurus">
+                Nomor HP Pengurus
+            </label>
+
+            <input
+                type="text"
+                id="hpPengurus"
+                placeholder="Nomor HP"
+            >
+
+
+            <label for="keterangan">
+                Keterangan
+            </label>
+
+            <textarea
+                id="keterangan"
+                placeholder="Keterangan"
+            ></textarea>
+
+
+            <div class="form-buttons">
+
+                <button id="btnSave">
+                    Simpan
+                </button>
+
+                <button id="btnDelete">
+                    Hapus
+                </button>
+
+            </div>
+
+
+            <div id="dataStatus"></div>
+
+        </section>
+
+
+        <!-- ==========================
+             DAFTAR JADWAL
+        =========================== -->
+
+        <section>
+
+            <h2>
+                Daftar Jadwal
+            </h2>
+
+            <div id="daftarJadwal">
+                Belum ada data.
+            </div>
+
+        </section>
+
+
+    </section>
+
+
+</main>
+
+
+<footer>
+
+    Khatib FZ 27 —
+    Admin Panel
+
+</footer>
+
+<!-- FIREBASE -->
+<script src="https://www.gstatic.com/firebasejs/12.19.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/12.19.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore-compat.js"></script>
+
+<!-- ADMIN -->
+<script src="./admin.js"></script>
+
+</body>
+</html>

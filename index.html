@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Jadwal Khatib Jumat 2027</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+            color: #222;
+        }
+
+        header {
+            background: #1f2937;
+            color: white;
+            padding: 25px 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0 0 10px;
+            font-size: 28px;
+        }
+
+        header p {
+            margin: 5px 0;
+            font-size: 16px;
+        }
+
+        header a {
+            color: white;
+            text-decoration: none;
+        }
+
+        header a:hover {
+            text-decoration: underline;
+        }
+
+        .admin-button {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 10px 22px;
+            background: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        .admin-button:hover {
+            background: #1d4ed8;
+        }
+
+        main {
+            max-width: 900px;
+            margin: auto;
+            padding: 20px;
+        }
+
+        section {
+            margin-bottom: 30px;
+        }
+
+        section > h2 {
+            margin-bottom: 20px;
+        }
+
+        /* =========================
+           KOTAK BULAN
+        ========================= */
+
+        #bulanContainer {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+        }
+
+        .bulan-card {
+            background: white;
+            padding: 25px 10px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+            text-align: center;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 17px;
+            transition: 0.2s;
+        }
+
+        .bulan-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 14px rgba(0, 0, 0, 0.18);
+        }
+
+        /* =========================
+           AREA JADWAL
+        ========================= */
+
+        #jadwalSection {
+            display: none;
+        }
+
+        #judulBulan {
+            margin-bottom: 20px;
+        }
+
+        #jadwalContainer {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .jadwal {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+        }
+
+        .jadwal h3 {
+            margin-top: 0;
+            margin-bottom: 20px;
+            font-size: 20px;
+        }
+
+        .jadwal p {
+            margin: 10px 0;
+            line-height: 1.5;
+        }
+
+        /* =========================
+           INPUT JADWAL
+        ========================= */
+
+        #formSection {
+            display: none;
+        }
+
+        .form-jadwal {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+        }
+
+        .form-jadwal h2 {
+            margin-top: 0;
+            margin-bottom: 20px;
+        }
+
+        .form-jadwal label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        .form-jadwal select,
+        .form-jadwal input,
+        .form-jadwal textarea {
+            display: block;
+            width: 100%;
+            padding: 11px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 16px;
+            font-family: Arial, sans-serif;
+        }
+
+        .form-jadwal textarea {
+            min-height: 90px;
+            resize: vertical;
+        }
+
+        .form-jadwal select:focus,
+        .form-jadwal input:focus,
+        .form-jadwal textarea:focus {
+            outline: none;
+            border-color: #2563eb;
+        }
+
+        .form-jadwal button {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 6px;
+            background: #2563eb;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .form-jadwal button:hover {
+            background: #1d4ed8;
+        }
+
+        /* =========================
+           ADMIN
+        ========================= */
+
+        .admin-actions {
+            display: none;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .btn-edit,
+        .btn-delete {
+            padding: 9px 15px;
+            border: none;
+            border-radius: 6px;
+            color: white;
+            cursor: pointer;
+        }
+
+        .btn-edit {
+            background: #2563eb;
+        }
+
+        .btn-delete {
+            background: #dc2626;
+        }
+
+        .kembali-button {
+            margin-bottom: 15px;
+            padding: 9px 15px;
+            border: none;
+            border-radius: 6px;
+            background: #6b7280;
+            color: white;
+            cursor: pointer;
+        }
+
+        footer {
+            text-align: center;
+            padding: 25px;
+            color: #666;
+            font-size: 14px;
+        }
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 700px) {
+
+            header h1 {
+                font-size: 23px;
+            }
+
+            main {
+                padding: 12px;
+            }
+
+            #bulanContainer {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 10px;
+            }
+
+            .bulan-card {
+                padding: 20px 5px;
+                font-size: 15px;
+            }
+
+            .jadwal {
+                padding: 16px;
+            }
+
+            .form-jadwal {
+                padding: 18px;
+            }
+        }
+
+        @media (max-width: 450px) {
+
+            #bulanContainer {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- =========================
+         HEADER
+    ========================== -->
+
+    <header>
+
+        <h1>Jadwal Khatib Jumat 2027</h1>
+
+        <p>FAUZANAL PUTRA SIQ., S.Pd.I.</p>
+
+        <p>
+            HP:
+            <a href="https://wa.me/6281365325435" target="_blank">
+                +6281365325435
+            </a>
+            -
+            <a href="https://wa.me/6281255030340" target="_blank">
+                +6281255030340
+            </a>
+        </p>
+
+        <button
+            id="btnAdmin"
+            class="admin-button">
+            Admin
+        </button>
+
+    </header>
+
+
+    <main>
+
+        <!-- =========================
+             PILIH BULAN
+        ========================== -->
+
+        <section>
+
+            <h2>Pilih Bulan</h2>
+
+            <div id="bulanContainer"></div>
+
+        </section>
+
+
+        <!-- =========================
+             JADWAL
+        ========================== -->
+
+        <section id="jadwalSection">
+
+            <button
+                id="btnKembali"
+                class="kembali-button">
+                ← Kembali ke Bulan
+            </button>
+
+            <h2 id="judulBulan"></h2>
+
+            <div id="jadwalContainer"></div>
+
+        </section>
+
+
+        <!-- =========================
+             INPUT JADWAL
+        ========================== -->
+
+        <section
+            id="formSection"
+            class="form-jadwal">
+
+            <h2>Input Jadwal</h2>
+
+            <label for="pilihJadwal">
+                Pilih Jadwal Jumat
+            </label>
+
+            <select id="pilihJadwal"></select>
+
+
+            <label for="inputMasjid">
+                Nama Masjid
+            </label>
+
+            <input
+                id="inputMasjid"
+                type="text"
+                placeholder="Nama Masjid">
+
+
+            <label for="inputAlamat">
+                Alamat / Lokasi
+            </label>
+
+            <input
+                id="inputAlamat"
+                type="text"
+                placeholder="Alamat/Lokasi">
+
+
+            <label for="inputPengurus">
+                Nama Pengurus
+            </label>
+
+            <input
+                id="inputPengurus"
+                type="text"
+                placeholder="Nama Pengurus">
+
+
+            <label for="inputHP">
+                Nomor HP Pengurus
+            </label>
+
+            <input
+                id="inputHP"
+                type="text"
+                placeholder="Nomor HP Pengurus">
+
+
+            <label for="inputKeterangan">
+                Keterangan
+            </label>
+
+            <textarea
+                id="inputKeterangan"
+                placeholder="Keterangan"></textarea>
+
+
+            <button id="btnSimpan">
+                Simpan Jadwal
+            </button>
+
+        </section>
+
+    </main>
+
+
+    <!-- =========================
+         FOOTER
+    ========================== -->
+
+    <footer>
+
+       Dibuat oleh Hui Techno & Team — Butuh solusi digital berupa web, aplikasi dan lain-lain? Hubungi Admin: +6285831434588
+
+    </footer>
+
+<script src="https://www.gstatic.com/firebasejs/12.19.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore-compat.js"></script>
+
+<script src="./firebase.js"></script>
+    <script src="script.js"></script>
+
+</body>
+
+</html>
