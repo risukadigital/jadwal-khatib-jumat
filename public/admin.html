@@ -1,0 +1,377 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Admin - Jadwal Khatib Jumat 2027</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: #f1f5f9;
+        color: #1e293b;
+      }
+      header {
+        background: #1e293b;
+        color: white;
+        text-align: center;
+        padding: 28px 18px;
+      }
+      header h1 {
+        margin: 0 0 8px;
+        font-size: clamp(22px, 4vw, 30px);
+      }
+      header p {
+        margin: 0;
+        color: #cbd5e1;
+      }
+      main {
+        width: min(1000px, 92%);
+        margin: 28px auto;
+      }
+      .box,
+      .admin-top {
+        background: white;
+        padding: 22px;
+        border-radius: 12px;
+        box-shadow: 0 3px 10px #0000000d;
+        margin-bottom: 24px;
+      }
+      label {
+        display: block;
+        margin: 14px 0 6px;
+        font-weight: 700;
+      }
+      input {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #cbd5e1;
+        border-radius: 8px;
+        font-size: 16px;
+      }
+      button {
+        border: 0;
+        border-radius: 8px;
+        padding: 11px 15px;
+        font-weight: 700;
+        cursor: pointer;
+      }
+      button:focus-visible,
+      input:focus-visible {
+        outline: 3px solid #93c5fd;
+        outline-offset: 2px;
+      }
+      #btnLogin {
+        margin-top: 18px;
+        width: 100%;
+        background: #2563eb;
+        color: white;
+      }
+      #btnLogout {
+        background: #dc2626;
+        color: white;
+      }
+      .hidden {
+        display: none !important;
+      }
+      .admin-top-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 14px;
+        flex-wrap: wrap;
+      }
+      .admin-email {
+        color: #64748b;
+        margin-top: 5px;
+        overflow-wrap: anywhere;
+      }
+      #loginStatus,
+      #dataStatus {
+        margin-top: 12px;
+        color: #475569;
+      }
+      #bulanContainer {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 12px;
+      }
+      .bulan-card {
+        background: white;
+        border: 1px solid #cbd5e1;
+        color: #1e293b;
+        min-height: 54px;
+      }
+      .bulan-card:hover,
+      .bulan-card.active {
+        background: #2563eb;
+        color: white;
+        border-color: #2563eb;
+      }
+      #tanggalContainer {
+        display: grid;
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        gap: 10px;
+      }
+      .tanggal-card {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 5px;
+        min-height: 76px;
+        background: white;
+        border: 1px solid #cbd5e1;
+        color: #1e293b;
+      }
+      .tanggal-card .day {
+        font-size: 21px;
+      }
+      .tanggal-card .label {
+        font-size: 12px;
+        font-weight: 400;
+        color: #64748b;
+        margin: 0;
+      }
+      .tanggal-card.terisi {
+        border-color: #16a34a;
+        background: #f0fdf4;
+      }
+      .tanggal-card.terisi .label {
+        color: #15803d;
+        font-weight: 700;
+      }
+      .tanggal-card:hover {
+        border-color: #2563eb;
+      }
+      #daftarJadwal {
+        display: grid;
+        gap: 12px;
+      }
+      .jadwal-item {
+        border: 1px solid #e2e8f0;
+        border-radius: 10px;
+        padding: 16px;
+      }
+      .jadwal-item h3 {
+        margin: 0 0 8px;
+        font-size: 17px;
+      }
+      .jadwal-item p {
+        margin: 5px 0;
+        overflow-wrap: anywhere;
+      }
+      .jadwal-item button {
+        margin-top: 10px;
+        background: #dbeafe;
+        color: #1d4ed8;
+      }
+      .muted {
+        color: #64748b;
+      }
+      .modal-backdrop {
+        position: fixed;
+        inset: 0;
+        background: #0f172a99;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 16px;
+        z-index: 10;
+      }
+      .dialog {
+        width: min(520px, 100%);
+        max-height: 92vh;
+        overflow-y: auto;
+        background: white;
+        border-radius: 14px;
+        padding: 24px;
+        box-shadow: 0 20px 50px #0003;
+      }
+      .dialog h2 {
+        margin: 0 0 6px;
+      }
+      .dialog .date-label {
+        margin: 0 0 14px;
+        color: #64748b;
+      }
+      .dialog-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 20px;
+      }
+      #btnSave {
+        background: #16a34a;
+        color: white;
+        flex: 1;
+      }
+      #btnDelete {
+        background: #fee2e2;
+        color: #b91c1c;
+      }
+      #btnCancel {
+        background: #e2e8f0;
+        color: #334155;
+      }
+      footer {
+        text-align: center;
+        padding: 24px;
+        color: #64748b;
+        font-size: 14px;
+      }
+      @media (max-width: 700px) {
+        #bulanContainer {
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+        #tanggalContainer {
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+      }
+      @media (max-width: 420px) {
+        #bulanContainer {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+        #tanggalContainer {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+        .box,
+        .admin-top {
+          padding: 16px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Admin Khatib Jumat 2027</h1>
+      <p>Kelola jadwal khatib berdasarkan tanggal Jumat</p>
+    </header>
+
+    <main>
+      <section id="loginBox" class="box">
+        <h2>Login Admin</h2>
+        <label for="email">Email</label>
+        <input
+          type="email"
+          id="email"
+          autocomplete="username"
+          placeholder="Email admin"
+        />
+        <label for="password">Password</label>
+        <input
+          type="password"
+          id="password"
+          autocomplete="current-password"
+          placeholder="Password admin"
+        />
+        <button id="btnLogin" type="button">Login</button>
+        <div id="loginStatus" role="status" aria-live="polite"></div>
+      </section>
+
+      <section id="adminPanel" class="hidden">
+        <div class="admin-top">
+          <div class="admin-top-content">
+            <div>
+              <strong>Admin Login</strong>
+              <div id="adminEmail" class="admin-email"></div>
+            </div>
+            <button id="btnLogout" type="button">Logout</button>
+          </div>
+        </div>
+
+        <section class="box">
+          <h2>1. Pilih Bulan</h2>
+          <p class="muted">
+            Pilih bulan untuk menampilkan tanggal-tanggal Jumat tahun 2027.
+          </p>
+          <div id="bulanContainer"></div>
+        </section>
+
+        <section id="tanggalSection" class="box hidden">
+          <h2 id="judulBulan">2. Pilih Tanggal Jumat</h2>
+          <p class="muted">
+            Tanggal bertanda hijau sudah memiliki jadwal. Klik tanggal untuk
+            menambah atau mengedit data.
+          </p>
+          <div id="tanggalContainer"></div>
+        </section>
+
+        <section class="box">
+          <h2>Jadwal Tersimpan</h2>
+          <div id="daftarJadwal">
+            <p class="muted">Memuat data jadwal...</p>
+          </div>
+          <div id="dataStatus" role="status" aria-live="polite"></div>
+        </section>
+      </section>
+    </main>
+
+    <div id="modalJadwal" class="modal-backdrop hidden" role="presentation">
+      <section
+        class="dialog"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="dialogTitle"
+      >
+        <h2 id="dialogTitle">Data Jadwal</h2>
+        <p id="dialogTanggal" class="date-label"></p>
+        <form id="formJadwal">
+          <label for="tempat">Nama tempat / masjid</label>
+          <input
+            id="tempat"
+            name="tempat"
+            maxlength="160"
+            required
+            placeholder="Contoh: Masjid Al-Barokah"
+          />
+          <label for="alamat">Alamat</label>
+          <input
+            id="alamat"
+            name="alamat"
+            maxlength="250"
+            required
+            placeholder="Contoh: Sungai Kambut"
+          />
+          <label for="pengurus">Nama pengurus</label>
+          <input
+            id="pengurus"
+            name="pengurus"
+            maxlength="120"
+            required
+            placeholder="Nama pengurus masjid"
+          />
+          <label for="hpPengurus">Nomor HP pengurus</label>
+          <input
+            id="hpPengurus"
+            name="hpPengurus"
+            type="tel"
+            maxlength="30"
+            required
+            placeholder="Nomor yang bisa dihubungi"
+          />
+          <div
+            id="formStatus"
+            role="status"
+            aria-live="polite"
+            class="muted"
+          ></div>
+          <div class="dialog-actions">
+            <button id="btnSave" type="submit">Simpan Jadwal</button>
+            <button id="btnDelete" type="button" class="hidden">Hapus</button>
+            <button id="btnCancel" type="button">Batal</button>
+          </div>
+        </form>
+      </section>
+    </div>
+
+    <footer>Khatib FZ 27 — Admin Panel</footer>
+
+    <script src="https://www.gstatic.com/firebasejs/12.19.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/12.19.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore-compat.js"></script>
+    <script src="./admin.js"></script>
+  </body>
+</html>

@@ -1,0 +1,30 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function isAdmin() {
+      return request.auth != null
+        && request.auth.token.email == 'risuka.digital@gmail.com';
+    }
+
+    match /jadwal/{jadwalId} {
+      allow read: if true;
+
+      allow create: if isAdmin() || (
+        jadwalId.matches('jadwal-2027-[0-9]{2}-[0-9]{2}')
+        && request.resource.data.keys().hasOnly([
+          'masjid', 'alamat', 'pengurus', 'hp', 'keterangan'
+        ])
+        && request.resource.data.keys().hasAll([
+          'masjid', 'alamat', 'pengurus', 'hp', 'keterangan'
+        ])
+        && request.resource.data.masjid is string
+        && request.resource.data.alamat is string
+        && request.resource.data.pengurus is string
+        && request.resource.data.hp is string
+        && request.resource.data.keterangan is string
+      );
+
+      allow update, delete: if isAdmin();
+    }
+  }
+}

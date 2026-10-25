@@ -1,453 +1,381 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="id">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0f5132" />
+    <meta
+      name="description"
+      content="Informasi jadwal Khatib Jumat tahun 2027."
+    />
     <title>Jadwal Khatib Jumat 2027</title>
 
     <style>
-        * {
-            box-sizing: border-box;
+      :root {
+        --green: #0f5132;
+        --green-dark: #093b25;
+        --green-light: #e9f5ed;
+        --gold: #d7ad45;
+        --text: #1e293b;
+        --muted: #64748b;
+        --border: #e2e8f0;
+        --white: #ffffff;
+        --background: #f5f7f5;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        background: var(--background);
+        color: var(--text);
+        font-family: Arial, Helvetica, sans-serif;
+        line-height: 1.6;
+      }
+
+      header {
+        background: linear-gradient(135deg, var(--green-dark), var(--green));
+        color: white;
+        padding: 38px 20px 34px;
+        text-align: center;
+        border-bottom: 5px solid var(--gold);
+      }
+
+      .logo {
+        font-size: 38px;
+        margin-bottom: 8px;
+      }
+
+      header h1 {
+        font-size: clamp(25px, 4vw, 38px);
+        margin: 0;
+        line-height: 1.25;
+      }
+
+      header p {
+        max-width: 620px;
+        margin: 12px auto 0;
+        color: #e3f3e9;
+      }
+
+      .container {
+        width: min(1100px, calc(100% - 32px));
+        margin: 28px auto 50px;
+      }
+
+      .intro {
+        text-align: center;
+        margin-bottom: 25px;
+      }
+
+      .intro h2 {
+        color: var(--green);
+        margin: 0 0 5px;
+        font-size: 25px;
+      }
+
+      .intro p {
+        color: var(--muted);
+        margin: 0;
+      }
+
+      .panel {
+        background: var(--white);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 22px;
+        margin-bottom: 22px;
+        box-shadow: 0 4px 15px rgba(15, 81, 50, 0.05);
+      }
+
+      .panel h2 {
+        color: var(--green);
+        font-size: 19px;
+        margin: 0 0 16px;
+      }
+
+      .month-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 10px;
+      }
+
+      button {
+        font: inherit;
+        cursor: pointer;
+      }
+
+      .month-button {
+        padding: 12px 8px;
+        border: 1px solid #cbd5e1;
+        background: white;
+        color: var(--text);
+        border-radius: 9px;
+        font-weight: 700;
+        transition: 0.15s ease;
+      }
+
+      .month-button:hover,
+      .month-button.active {
+        background: var(--green);
+        border-color: var(--green);
+        color: white;
+      }
+
+      .friday-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 12px;
+      }
+
+      .friday-button {
+        border: 1px solid var(--border);
+        background: white;
+        border-radius: 10px;
+        padding: 14px 8px;
+        text-align: center;
+        color: var(--text);
+      }
+
+      .friday-button:hover,
+      .friday-button.active {
+        border-color: var(--green);
+        background: var(--green-light);
+      }
+
+      .friday-button .date-number {
+        display: block;
+        font-size: 27px;
+        font-weight: 800;
+        color: var(--green);
+      }
+
+      .friday-button .date-label {
+        display: block;
+        font-size: 12px;
+        color: var(--muted);
+      }
+
+      .friday-button .filled-label {
+        display: inline-block;
+        margin-top: 7px;
+        border-radius: 20px;
+        padding: 2px 8px;
+        font-size: 11px;
+        background: #e2e8f0;
+        color: #475569;
+      }
+
+      .friday-button .filled-label.filled {
+        background: #dcfce7;
+        color: #166534;
+      }
+
+      .status {
+        margin: 10px 0 0;
+        color: var(--muted);
+        font-size: 14px;
+      }
+
+      .schedule-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 16px;
+      }
+
+      .schedule-card {
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        overflow: hidden;
+        background: white;
+      }
+
+      .schedule-card-header {
+        background: var(--green-light);
+        border-bottom: 1px solid #d4e8da;
+        padding: 14px 17px;
+      }
+
+      .schedule-card-header h3 {
+        margin: 0;
+        font-size: 17px;
+        color: var(--green-dark);
+      }
+
+      .schedule-card-header p {
+        margin: 3px 0 0;
+        font-size: 13px;
+        color: var(--muted);
+      }
+
+      .schedule-card-body {
+        padding: 16px 17px;
+      }
+
+      .schedule-card-body p {
+        margin: 0 0 10px;
+        overflow-wrap: anywhere;
+      }
+
+      .schedule-card-body p:last-child {
+        margin-bottom: 0;
+      }
+
+      .field-label {
+        display: block;
+        color: var(--muted);
+        font-size: 12px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.4px;
+      }
+
+      .field-value {
+        display: block;
+        color: var(--text);
+        margin-top: 2px;
+      }
+
+      .phone-link {
+        color: var(--green);
+        font-weight: 700;
+        text-decoration: none;
+      }
+
+      .phone-link:hover {
+        text-decoration: underline;
+      }
+
+      .empty {
+        padding: 25px 15px;
+        text-align: center;
+        border: 1px dashed #cbd5e1;
+        border-radius: 10px;
+        color: var(--muted);
+        background: #fafafa;
+        grid-column: 1 / -1;
+      }
+
+      .hidden {
+        display: none !important;
+      }
+
+      footer {
+        background: #092f20;
+        color: #dbece1;
+        text-align: center;
+        padding: 24px 16px;
+        font-size: 13px;
+      }
+
+      footer p {
+        margin: 4px 0;
+      }
+
+      @media (max-width: 700px) {
+        .month-grid {
+          grid-template-columns: repeat(3, minmax(0, 1fr));
         }
 
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: Arial, sans-serif;
-            background: #f4f6f8;
-            color: #222;
+        .friday-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
         }
 
-        header {
-            background: #1f2937;
-            color: white;
-            padding: 25px 20px;
-            text-align: center;
+        .schedule-grid {
+          grid-template-columns: 1fr;
         }
 
-        header h1 {
-            margin: 0 0 10px;
-            font-size: 28px;
+        .panel {
+          padding: 16px;
         }
+      }
 
-        header p {
-            margin: 5px 0;
-            font-size: 16px;
+      @media (max-width: 380px) {
+        .month-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
         }
-
-        header a {
-            color: white;
-            text-decoration: none;
-        }
-
-        header a:hover {
-            text-decoration: underline;
-        }
-
-        .admin-button {
-            display: inline-block;
-            margin-top: 15px;
-            padding: 10px 22px;
-            background: #2563eb;
-            color: white;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 15px;
-        }
-
-        .admin-button:hover {
-            background: #1d4ed8;
-        }
-
-        main {
-            max-width: 900px;
-            margin: auto;
-            padding: 20px;
-        }
-
-        section {
-            margin-bottom: 30px;
-        }
-
-        section > h2 {
-            margin-bottom: 20px;
-        }
-
-        /* =========================
-           KOTAK BULAN
-        ========================= */
-
-        #bulanContainer {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 15px;
-        }
-
-        .bulan-card {
-            background: white;
-            padding: 25px 10px;
-            border-radius: 12px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
-            text-align: center;
-            cursor: pointer;
-            font-weight: bold;
-            font-size: 17px;
-            transition: 0.2s;
-        }
-
-        .bulan-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 14px rgba(0, 0, 0, 0.18);
-        }
-
-        /* =========================
-           AREA JADWAL
-        ========================= */
-
-        #jadwalSection {
-            display: none;
-        }
-
-        #judulBulan {
-            margin-bottom: 20px;
-        }
-
-        #jadwalContainer {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        .jadwal {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
-        }
-
-        .jadwal h3 {
-            margin-top: 0;
-            margin-bottom: 20px;
-            font-size: 20px;
-        }
-
-        .jadwal p {
-            margin: 10px 0;
-            line-height: 1.5;
-        }
-
-        /* =========================
-           INPUT JADWAL
-        ========================= */
-
-        #formSection {
-            display: none;
-        }
-
-        .form-jadwal {
-            background: white;
-            padding: 25px;
-            border-radius: 10px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
-        }
-
-        .form-jadwal h2 {
-            margin-top: 0;
-            margin-bottom: 20px;
-        }
-
-        .form-jadwal label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: bold;
-        }
-
-        .form-jadwal select,
-        .form-jadwal input,
-        .form-jadwal textarea {
-            display: block;
-            width: 100%;
-            padding: 11px;
-            margin-bottom: 15px;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-            font-size: 16px;
-            font-family: Arial, sans-serif;
-        }
-
-        .form-jadwal textarea {
-            min-height: 90px;
-            resize: vertical;
-        }
-
-        .form-jadwal select:focus,
-        .form-jadwal input:focus,
-        .form-jadwal textarea:focus {
-            outline: none;
-            border-color: #2563eb;
-        }
-
-        .form-jadwal button {
-            width: 100%;
-            padding: 12px;
-            border: none;
-            border-radius: 6px;
-            background: #2563eb;
-            color: white;
-            font-size: 16px;
-            cursor: pointer;
-        }
-
-        .form-jadwal button:hover {
-            background: #1d4ed8;
-        }
-
-        /* =========================
-           ADMIN
-        ========================= */
-
-        .admin-actions {
-            display: none;
-            gap: 10px;
-            margin-top: 15px;
-        }
-
-        .btn-edit,
-        .btn-delete {
-            padding: 9px 15px;
-            border: none;
-            border-radius: 6px;
-            color: white;
-            cursor: pointer;
-        }
-
-        .btn-edit {
-            background: #2563eb;
-        }
-
-        .btn-delete {
-            background: #dc2626;
-        }
-
-        .kembali-button {
-            margin-bottom: 15px;
-            padding: 9px 15px;
-            border: none;
-            border-radius: 6px;
-            background: #6b7280;
-            color: white;
-            cursor: pointer;
-        }
-
-        footer {
-            text-align: center;
-            padding: 25px;
-            color: #666;
-            font-size: 14px;
-        }
-
-        /* =========================
-           MOBILE
-        ========================= */
-
-        @media (max-width: 700px) {
-
-            header h1 {
-                font-size: 23px;
-            }
-
-            main {
-                padding: 12px;
-            }
-
-            #bulanContainer {
-                grid-template-columns: repeat(3, 1fr);
-                gap: 10px;
-            }
-
-            .bulan-card {
-                padding: 20px 5px;
-                font-size: 15px;
-            }
-
-            .jadwal {
-                padding: 16px;
-            }
-
-            .form-jadwal {
-                padding: 18px;
-            }
-        }
-
-        @media (max-width: 450px) {
-
-            #bulanContainer {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
+      }
     </style>
-</head>
 
-<body>
+    <link rel="manifest" href="./manifest.json" />
+    <meta name="theme-color" content="#14532d" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="Khatib Jumat FZ" />
+  </head>
 
-    <!-- =========================
-         HEADER
-    ========================== -->
-
+  <body>
     <header>
+      <div class="logo" aria-hidden="true">🕌</div>
 
-        <h1>Jadwal Khatib Jumat 2027</h1>
+      <h1>Jadwal Khatib Jumat</h1>
 
-        <p>FAUZANAL PUTRA SIQ., S.Pd.I.</p>
+      <p>
+        <strong>FAUZANAL PUTRA SIQ SPd.I</strong>
+      </p>
 
-        <p>
-            HP:
-            <a href="https://wa.me/6281365325435" target="_blank">
-                +6281365325435
-            </a>
-            -
-            <a href="https://wa.me/6281255030340" target="_blank">
-                +6281255030340
-            </a>
-        </p>
+      <p>081365325435 - 081255030340</p>
+      <p>REALTIME-ANTI RIBET-ANTI DEMPET</p>
 
-        <button
-            id="btnAdmin"
-            class="admin-button">
-            Admin
-        </button>
+      <p>jadwal pelaksanaan sHalat Jumat tahun 2027</p>
 
+      <div style="margin-top: 20px">
+        <a href="admin.html" class="admin-button"> ⚙ ADMIN </a>
+      </div>
     </header>
 
+    <main class="container">
+      <section class="intro">
+        <h2>Jadwal Khatib Jumat 2027</h2>
+        <p>Pilih bulan, kemudian pilih tanggal Jumat untuk melihat jadwal.</p>
+      </section>
 
-    <main>
+      <section class="panel">
+        <h2>1. Pilih Bulan</h2>
+        <div id="monthGrid" class="month-grid"></div>
+      </section>
 
-        <!-- =========================
-             PILIH BULAN
-        ========================== -->
+      <section id="fridaySection" class="panel hidden">
+        <h2 id="fridayTitle">2. Pilih Tanggal Jumat</h2>
+        <div id="fridayGrid" class="friday-grid"></div>
+        <p id="fridayStatus" class="status" role="status"></p>
+      </section>
 
-        <section>
-
-            <h2>Pilih Bulan</h2>
-
-            <div id="bulanContainer"></div>
-
-        </section>
-
-
-        <!-- =========================
-             JADWAL
-        ========================== -->
-
-        <section id="jadwalSection">
-
-            <button
-                id="btnKembali"
-                class="kembali-button">
-                ← Kembali ke Bulan
-            </button>
-
-            <h2 id="judulBulan"></h2>
-
-            <div id="jadwalContainer"></div>
-
-        </section>
-
-
-        <!-- =========================
-             INPUT JADWAL
-        ========================== -->
-
-        <section
-            id="formSection"
-            class="form-jadwal">
-
-            <h2>Input Jadwal</h2>
-
-            <label for="pilihJadwal">
-                Pilih Jadwal Jumat
-            </label>
-
-            <select id="pilihJadwal"></select>
-
-
-            <label for="inputMasjid">
-                Nama Masjid
-            </label>
-
-            <input
-                id="inputMasjid"
-                type="text"
-                placeholder="Nama Masjid">
-
-
-            <label for="inputAlamat">
-                Alamat / Lokasi
-            </label>
-
-            <input
-                id="inputAlamat"
-                type="text"
-                placeholder="Alamat/Lokasi">
-
-
-            <label for="inputPengurus">
-                Nama Pengurus
-            </label>
-
-            <input
-                id="inputPengurus"
-                type="text"
-                placeholder="Nama Pengurus">
-
-
-            <label for="inputHP">
-                Nomor HP Pengurus
-            </label>
-
-            <input
-                id="inputHP"
-                type="text"
-                placeholder="Nomor HP Pengurus">
-
-
-            <label for="inputKeterangan">
-                Keterangan
-            </label>
-
-            <textarea
-                id="inputKeterangan"
-                placeholder="Keterangan"></textarea>
-
-
-            <button id="btnSimpan">
-                Simpan Jadwal
-            </button>
-
-        </section>
-
+      <section class="panel">
+        <h2 id="scheduleTitle">Jadwal Khatib</h2>
+        <p id="scheduleStatus" class="status" role="status">
+          Menghubungkan ke database jadwal...
+        </p>
+        <div id="scheduleGrid" class="schedule-grid"></div>
+      </section>
     </main>
 
-
-    <!-- =========================
-         FOOTER
-    ========================== -->
-
     <footer>
-
-       Dibuat oleh Hui Techno & Team — Butuh solusi digital berupa web, aplikasi dan lain-lain? Hubungi Admin: +6285831434588
-
+      <p><strong>Jadwal Khatib Jumat 2027</strong></p>
+      <p>Semoga menjadi sarana informasi dan kemudahan bagi umat.</p>
     </footer>
 
-<script src="https://www.gstatic.com/firebasejs/12.19.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore-compat.js"></script>
+    <!-- Firebase SDK compat -->
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 
-<script src="./firebase.js"></script>
+    <!-- Konfigurasi Firebase proyek -->
+    <script src="firebase.js"></script>
+
+    <!-- Logika halaman utama -->
     <script src="script.js"></script>
 
-</body>
-
+    <script>
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", () => {
+          navigator.serviceWorker
+            .register("./service-worker.js")
+            .then(() => console.log("PWA Khatib Jumat FZ aktif"))
+            .catch((error) => console.error("PWA gagal aktif:", error));
+        });
+      }
+    </script>
+  </body>
 </html>
